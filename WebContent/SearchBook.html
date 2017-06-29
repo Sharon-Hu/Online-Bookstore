@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SearchBook</title>
+<script language="JavaScript">
+function showTime() {
+	var today = new Date();
+	var hour = today.getHours();
+	var minute = today.getMinutes();
+	minute=checkTime(minute);
+	document.getElementById('time').innerHTML=hour+":"+minute;
+	document.getElementById('date').innerHTML=today.getDay()+"/"+today.getMonth()+"/"+today.getFullYear();
+	t=setTimeout('showTime()',500);
+}
+
+function checkTime(i) {
+if (i<10) 
+  {i="0" + i}
+  return i
+}
+
+function isBlank(s){
+	var i
+	for (i=0; i<s.length; i++){
+		if (s.charAt(i)!=" ")
+			return false
+   }
+   return true
+}
+
+function validate(fieldName, fieldValue) {
+	if(isBlank(fieldValue)) {
+		return false
+	}
+	return true
+}
+
+function formvalidate() {
+	if (validate("The isbn name field",document.searchbook.isbn.value) ||  
+			validate("The author name field",document.searchbook.author.value))
+		{		
+		return true
+		}
+		else
+			{		
+			alert("Please input search information")
+			return false
+			}
+}
+
+</script>
+</head>
+<body onload = "showTime()">
+<form name = "searchbook"  onsubmit="return formvalidate()" action="QueryServlet"
+    method="post" >
+
+<p> The time now is: <span id = time></span> <br>
+The data is: <span id = date></span>
+</p>
+<p>Please choose<b> either ISBN or Author</b> to search books:<br>
+search by ISBN: <input type ="text" name = "isbn"> <br>
+search by Author: <input type ="text" name = "author">
+</p>
+<p> <input type="submit"  value="Submit"></p>
+</form>
+</body>
+</html>
